@@ -65,16 +65,15 @@ void Hashinset(Hashtable *hash,Typekey key,Typeval value)
             hash->size++;
             return ;
         }
-        else
-        {
+        else if(hash->data[offset].key==key && hash->data[offset].st==valid)
+            return;
+        else {
             offset++;
             if(offset>=MAX_SIZE)
             {
                 offset=0;
             }
         }
-        if(hash->data[offset].key==key && hash->data[offset].st==valid)
-            return;
     }
 }
 int main()
@@ -87,7 +86,7 @@ int main()
     Hashinset(&hash,430,430);
     Hashinset(&hash,541,541);
     Hashinset(&hash,900,900);
-    Hashinset(&hash,460,460);
+    Hashinset(&hash,900,900);
     Hashinset(&hash,443,443);
     int i=0;
     for(i=0;i<MAX_SIZE;i++)
