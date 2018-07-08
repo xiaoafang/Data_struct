@@ -124,6 +124,27 @@ void Hashremove(Hashtable *hash,Typekey key)
         free(cur);
     }
 }
+void Hashdestroy(Hashtable *hash)
+{
+    if(hash==NULL)
+        return ;
+    hash->size=0;
+    hash->func=NULL;
+    int i;
+    for(i=0;i<MAX_SIZE;i++)
+    {
+        HashNode *cur=hash->data[i];
+        if(cur==NULL)
+            continue;
+        while(cur!=NULL)
+        {
+            HashNode *pre=cur;
+            free(cur);
+            cur=NULL;
+            cur=pre->next;
+        }
+    }
+}
 int main()
 {
     Hashtable hash;
@@ -136,10 +157,12 @@ int main()
     Hashinsert(&hash,900,900);
     Hashinsert(&hash,460,460);
     Hashinsert(&hash,443,443);
-    //printf("%d %d",((&hash)->data[1])->key,((&hash)->data[1])->next->key);
+   // printf("%d %d",((&hash)->data[1])->key,((&hash)->data[1])->next->key);
     int a;
     //Hashremove(&hash,443);
     HashFind(&hash,443,&a);
-    printf("%d",a);
+    //printf("%d",a);
+    Hashdestroy(&hash);
+    printf("%d %d",((&hash)->data[1])->key,((&hash)->data[1])->next->key);
     return 0;
 }
